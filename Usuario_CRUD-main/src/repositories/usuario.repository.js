@@ -69,9 +69,27 @@ function updateUsuarioRepository(id, Usuario) {
     });
 }
 
+function deleteUsuarioRepository(id) {
+    return new Promise((resolve, reject) => {
+        db.run(
+            `DELETE FROM usuario WHERE id = ?`,
+            [id],
+            function (error) {
+                if (error) return reject(error);
+
+                // if no rows were removed, treat as not found
+                if (this.changes === 0) return reject(new Error('Usuário não encontrado'));
+
+                resolve({ id });
+            }
+        );
+    });
+}
+
 export default {
     createUsuarioRepository,
     findUsuarioByIdRepository,
     findAllUsuarioRepository,
     updateUsuarioRepository
+    ,deleteUsuarioRepository
 };

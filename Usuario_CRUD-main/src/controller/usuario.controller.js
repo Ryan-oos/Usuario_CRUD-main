@@ -43,9 +43,27 @@ async function updateUsuarioController(req, res) {
     }
 }
 
+async function deleteUsuarioController(req, res) {
+    const { id } = req.params;
+
+    try {
+        await UsuarioService.deleteUsuarioService(id);
+        // 204 No Content is common for successful deletes
+        res.status(204).send();
+    } catch (error) {
+        // If not found, return 404, otherwise 400
+        if (error && error.message && error.message.includes('não encontrado')) {
+            res.status(404).send(error.message);
+        } else {
+            res.status(400).send(error.message);
+        }
+    }
+}
+
 export default {
     createUsuarioController,
     findAllUsuarioController,
     findUsuarioByIdController,
     updateUsuarioController
+    ,deleteUsuarioController
 };

@@ -16,9 +16,14 @@ async function updateUsuarioService(id, novoUsuario) {
     return await UsuarioRepository.updateUsuarioRepository(id, novoUsuario);
 }
 
+async function deleteUsuarioService(id) {
+    return await UsuarioRepository.deleteUsuarioRepository(id);
+}
+
 export default {
     createUsuarioService,
     findAllUsuarioService,
     findUsuarioByIdService,
     updateUsuarioService
+    ,deleteUsuarioService
 };
